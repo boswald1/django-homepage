@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,7 +71,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['mysite/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,19 +97,20 @@ if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/<your-project-id>:<your-cloud-sql-instance>',
-            'NAME': '<your-database-name>',
+            'HOST': '/cloudsql/named-archway-141900:us-central1:mydb2',
+            'NAME': 'blog',
             'USER': 'root',
+            'PASSWORD': 'X8S-WST-oCy-EcB'
         }
     }
 else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': '<your-database-name>',
-            'USER': '<your-database-user>',
-            'PASSWORD': '<your-database-password>',
-            'HOST': '<your-database-host>',
+            'NAME': 'blog',
+            'USER': 'root',
+            'PASSWORD': 'X8S-WST-oCy-EcB',
+            'HOST': '104.197.205.148',
             'PORT': '3306',
         }
     }
