@@ -1,47 +1,60 @@
 {% load staticfiles %}
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Bryan's Blog</title>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Bryan Oswald's Website</title>
 
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    </head>
-    <body>
-        <div class="page-header">
-        	<h1><a href="/">Bryan's Homepage</a></h1>
-        </div>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav">
-                    <li> <a href="/">Home</a></li>
-                    <li> <a href="/blog">Blog</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/library">Library</a></li>
-                            <li><a href="#">Project 2</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <div class="content container">
-	        <div class="row">
-	            <div class="col-md-8">
-		            {% block content %}
-		            {% endblock %}
-	            </div>
-	        </div>
-	    </div>
+		
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'mysite/static/css/base.css' %}">
+	</head>
+	<body>
+
+		<div class="container">
+
+			<div class="page-header">
+				<h1><a href="/">Bryan's Homepage</a></h1>
+			</div>
+
+
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li class="active"> <a href="/">Home</a></li>
+						<li> <a href="/blog">Blog</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/library">Library</a></li>
+								<li><a href="#">Project 2</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
 
 
+			<div class="content container">
+				<div class="row">
+					<div class="col-md-8">
+						{% block content %}
+						{% endblock %}
+					</div>
+				</div>
+			</div>
+		</div>	
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	</body>
 </html>
