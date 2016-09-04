@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'polls',
     'blog',
+    'library',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,7 +122,7 @@ else:
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US'
 
 USE_I18N = True
 

@@ -15,10 +15,11 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-import blog.views, views
+import blog.views, library.views, views
 
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^blog/', include('blog.urls')),
+    url(r'^library/', include('library.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
