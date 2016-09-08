@@ -1,0 +1,15 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+	{% if champ_list %}
+		<ul>
+		{% for champ in champ_list %}
+			<li>
+				<a href="/champ/{{ champ.champ_id }}/">{{ champ.name }}</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>There are no champs</p>
+	{% endif %}
+{% endblock %}

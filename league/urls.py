@@ -5,4 +5,5 @@ import views
 
 urlpatterns = [
     url(r'^$', views.index),
+    url(r'^champions/', views.champions),
 ]
