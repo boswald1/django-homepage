@@ -12,14 +12,3 @@ def resume(request):
 	return render(request, 'mysite/resume.html')
 
 
-'''
-from reportlab.pdfgen import canvas
-from django.http import HttpResponse
-
-def resume(request):
-	with open('static/resume.pdf', 'rb') as pdf:
-		response = HttpResponse(pdf.read(), mimetype='application/pdf')
-		response['Content-Disposition'] = 'inline;filename=some_file.pdf'
-		return response
-	pdf.closed
-'''

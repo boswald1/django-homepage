@@ -15,12 +15,13 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
-import blog.views, library.views, views
+import blog.views, library.views, league.views, views
 
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^resume/', views.resume),
 
+    url(r'^league/', include('league.urls')),
     url(r'^blog/', include('blog.urls')),
     url(r'^library/', include('library.urls')),
     url(r'^admin/', include(admin.site.urls)),
