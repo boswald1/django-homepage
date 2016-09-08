@@ -1,3 +1,21 @@
+body, html {
+	height: 100%;
+}
+
+body {
+    padding-top: 70px;
+	background-color: black;
+}
+
+#main {
+	background-color: white;
+	height: 100vh;
+}
+
+container {
+	background-color: red;
+}
+
 page-header {
 	background-color: blue;
 	height: 100px;
@@ -6,3 +24,4 @@ page-header {
 h1 a {
 	color: #FCA205;
 }
+

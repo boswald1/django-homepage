@@ -16,6 +16,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 import blog.views, library.views, league.views, views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^$', views.index),
@@ -25,4 +26,6 @@ urlpatterns = [
     url(r'^blog/', include('blog.urls')),
     url(r'^library/', include('library.urls')),
     url(r'^admin/', include(admin.site.urls)),
-]
+] 
+
+urlpatterns += staticfiles_urlpatterns()
