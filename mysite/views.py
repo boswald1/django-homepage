@@ -4,3 +4,22 @@ from django.template import loader
 def index(request):
 	template = loader.get_template('mysite/index.html')
 	return render(request, 'mysite/index.html')
+
+
+from django.contrib.staticfiles.templatetags.staticfiles import static
+def resume(request):
+	template = loader.get_template('mysite/resume.html')
+	return render(request, 'mysite/resume.html')
+
+
+'''
+from reportlab.pdfgen import canvas
+from django.http import HttpResponse
+
+def resume(request):
+	with open('static/resume.pdf', 'rb') as pdf:
+		response = HttpResponse(pdf.read(), mimetype='application/pdf')
+		response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+		return response
+	pdf.closed
+'''

@@ -19,6 +19,8 @@ import blog.views, library.views, views
 
 urlpatterns = [
     url(r'^$', views.index),
+    url(r'^resume/', views.resume),
+
     url(r'^blog/', include('blog.urls')),
     url(r'^library/', include('library.urls')),
     url(r'^admin/', include(admin.site.urls)),

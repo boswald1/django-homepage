@@ -1,0 +1,10 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+
+	<div class="hero-unit">
+		{% load static %}
+		<embed src="{% static "mysite/resume.pdf" %}" width="500" height="375" type='application/pdf'>
+
+	</div>
+{% endblock %}
