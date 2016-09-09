@@ -13,7 +13,7 @@ class Champion(models.Model):
 	blurb = models.CharField(max_length=2000)
 	lore = models.CharField(max_length=2000)
 
-	
+
 
 	# champ statistics
 	armor = models.FloatField()
