@@ -13,12 +13,23 @@ def add_book(request):
 	else:
 		book_form = BookForm()
 
-	context = {'book_form': book_form }
+	page_title = "Add a New Book"
+
+	context = {
+		'book_form': book_form,
+		'page_title': page_title,
+	}
 	return render(request, 'library/add_book.html', context)
 
 def index(request):
 	book_list = Book.objects.order_by('-title')
-	context = {'book_list': book_list }
+
+	page_title = "Library Homepage"
+
+	context = {
+		'book_list': book_list,
+		'page_title': page_title,
+	}
 	return render(request, 'library/index.html', context)
 
 
