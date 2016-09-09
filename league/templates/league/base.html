@@ -1,0 +1,20 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}	
+	<div class="row">
+		<span class="span12">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<li><a href="/league/">Home</a></li>
+						<li><a href="champions/">Champions</a></li>
+					</ul>
+				</div>
+			</nav>
+		</span>
+	</div>
+
+	{% block lolpage %}
+	{% endblock %}
+
+{% endblock %}
