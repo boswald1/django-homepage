@@ -33,3 +33,18 @@ def detail(request, champ_id):
 		'page_title': page_title,
 	}
 	return render(request, 'league/detail.html', context)
+
+
+# REST API views
+from league.models import Champion
+from rest_framework import viewsets
+from league.serializers import ChampionSerializer
+
+class ChampionViewSet(viewsets.ModelViewSet):
+	"""
+	API endpoint allowing champions to be viewed or edited
+	"""
+	queryset = Champion.objects.all().order_by('-name')
+	serializer_class = ChampionSerializer
+
+

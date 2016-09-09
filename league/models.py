@@ -11,10 +11,10 @@ class Champion(models.Model):
 
 	# text stuff
 	blurb = models.CharField(max_length=2000)
-	lore = models.CharField(max_length=2000)
+	lore = models.CharField(max_length=2500)
 
 
-
+	'''
 	# champ statistics
 	armor = models.FloatField()
 	armor_per_level = models.FloatField()
@@ -36,7 +36,7 @@ class Champion(models.Model):
 	mana_regen_per_level = models.FloatField()
 	spell_block = models.FloatField()
 	spell_block_per_level = models.FloatField()
-
+	'''
 	# champion abilities
 
 	def __str__(self):
