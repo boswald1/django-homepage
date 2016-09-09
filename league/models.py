@@ -9,14 +9,11 @@ class Champion(models.Model):
 	title = models.CharField(max_length=30)
 	champ_id = models.IntegerField(primary_key=True)
 
+	# text stuff
 	blurb = models.CharField(max_length=2000)
 	lore = models.CharField(max_length=2000)
 
-	attack_rating = models.IntegerField()
-	defense_rating = models.IntegerField()
-	difficulty_rating = models.IntegerField()
-	magic_rating = models.IntegerField()
-
+	
 
 	# champ statistics
 	armor = models.FloatField()
@@ -41,3 +38,26 @@ class Champion(models.Model):
 	spell_block_per_level = models.FloatField()
 
 	# champion abilities
+
+	def __str__(self):
+		return self.name
+
+class image(models.Model):
+	# Stores information about image resources for champions
+	full = models.CharField(max_length=50)
+	group = models.CharField(max_length=50)
+	sprite = models.CharField(max_length=50)
+
+	h = models.IntegerField()
+	w = models.IntegerField()
+	x = models.IntegerField()
+	y = models.IntegerField()
+
+	
+class info(models.Model):
+	# 
+	attack_rating = models.IntegerField()
+	defense_rating = models.IntegerField()
+	difficulty_rating = models.IntegerField()
+	magic_rating = models.IntegerField()
+

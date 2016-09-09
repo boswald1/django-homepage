@@ -6,12 +6,19 @@ from .models import Champion
 
 # Create your views here.
 def index(request):
-	template = loader.get_template('league/index.html')
-	return render(request, 'league/index.html')
+	page_title = "League of Legends Information Station"
+	context = {
+		'page_title': page_title,
+	}
+	return render(request, 'league/index.html', context)
 
 def champions(request):
 	champ_list = Champion.objects.order_by('-name')
-	context = { 'champ_list': champ_list }
+	page_title = "Champion List"
+	context = {
+		'champ_list': champ_list,
+		'page_title': page_title,
+	}
 	return render(request, 'league/champs.html', context)
 
 def detail(request, champ_id):
@@ -19,4 +26,10 @@ def detail(request, champ_id):
 		champ = Champion.objects.get(pk=champ_id)
 	except Champion.DoesNotExist:
 		raise Http404("Champion does not exist")
-	return render(request, 'league/detail.html', {'champ': champ})
+
+	page_title = champ.name
+	context = {
+		'champ': champ,
+		'page_title': page_title,
+	}
+	return render(request, 'league/detail.html', context)
