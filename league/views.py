@@ -13,7 +13,7 @@ def index(request):
 	return render(request, 'league/index.html', context)
 
 def champions(request):
-	champ_list = Champion.objects.order_by('-name')
+	champ_list = Champion.objects.order_by('name')
 	page_title = "Champion List"
 	context = {
 		'champ_list': champ_list,
@@ -36,15 +36,20 @@ def detail(request, champ_id):
 
 
 # REST API views
-from league.models import Champion
-from rest_framework import viewsets
 from league.serializers import ChampionSerializer
+from rest_framework import generics, status, viewsets
 
-class ChampionViewSet(viewsets.ModelViewSet):
+class ChampionList(generics.ListCreateAPIView):
 	"""
-	API endpoint allowing champions to be viewed or edited
+	List all champions, or create a new champion
 	"""
-	queryset = Champion.objects.all().order_by('-name')
+	queryset = Champion.objects.all()
 	serializer_class = ChampionSerializer
 
+class ChampionDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update or delete a champion instance.
+    """
+    queryset = Champion.objects.all()
+    serializer_class = ChampionSerializer
 

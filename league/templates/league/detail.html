@@ -3,5 +3,9 @@
 {% block lolpage %}
 	<H1>{{ champ.name }}</H1>
 	<H2>{{ champ.title }}</H2>
+	{% autoescape off %}
+		{{ champ.lore  }}
+	{% endautoescape %}
+	{{ champ.allytips.all }}
 
 {% endblock %}
