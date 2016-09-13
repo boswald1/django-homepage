@@ -2,8 +2,8 @@ import json
 import urllib2
 import requests
 from django.core.management.base import BaseCommand
-from league.models import Champion, AllyTip
-from league.serializers import ChampionSerializer, AllyTipSerializer
+from league.models import Champion
+from league.serializers import ChampionSerializer
 
 class Command(BaseCommand):
 	args = ''
@@ -32,7 +32,7 @@ class Command(BaseCommand):
  			for key in champkeys:
 	 			serializer = ChampionSerializer(data=data[ champions[str(key)] ])
 	 			if serializer.is_valid():
-	 				print "yes"
+	 				print "Adding " + champions[str(key)]
 		 			serializer.save()
 	 			else:
 	 				print serializer.errors
@@ -41,5 +41,4 @@ class Command(BaseCommand):
 
 	def handle(self, *args, **options):
 		#self._get_data()
-		#self._serialize_data()
 		self._deserializeJSON()

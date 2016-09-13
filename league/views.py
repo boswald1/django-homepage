@@ -15,9 +15,11 @@ def index(request):
 def champions(request):
 	champ_list = Champion.objects.order_by('name')
 	page_title = "Champion List"
+	base_url = "//ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/"
 	context = {
 		'champ_list': champ_list,
 		'page_title': page_title,
+		'base_url': base_url,
 	}
 	return render(request, 'league/champs.html', context)
 
@@ -27,10 +29,14 @@ def detail(request, champ_id):
 	except Champion.DoesNotExist:
 		raise Http404("Champion does not exist")
 
+	base_url = "//ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/"
+
+
 	page_title = champ.name
 	context = {
+		'base_url': base_url,
 		'champ': champ,
-		'page_title': page_title,
+		#'page_title': page_title,
 	}
 	return render(request, 'league/detail.html', context)
 

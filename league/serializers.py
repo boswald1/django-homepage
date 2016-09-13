@@ -1,36 +1,52 @@
+import json
+from league.models import Champion, Image, Tag
 from rest_framework import serializers
-from league.models import Champion, AllyTip, EnemyTip
 
-class AllyTipSerializer(serializers.ModelSerializer):
+
+class ImageSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = AllyTip
-		fields = ('tip',)
-
-class EnemyTipSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = EnemyTip
-		fields = ('tip',)
-
+		model = Image
+		fields = (	'full',
+					'group',
+					'sprite',
+					'h', 'w', 'x', 'y')
 
 
 class ChampionSerializer(serializers.ModelSerializer):
-	allytips = AllyTipSerializer(many=True)
-	enemytips = EnemyTipSerializer(many=True)
+	image = ImageSerializer()
+	allytips = serializers.JSONField()
+	enemytips = serializers.JSONField()
+	stats = serializers.JSONField()
+	tags = serializers.JSONField()
 
 	class Meta:
 		model = Champion
-		fields = ('name', 'title', 'id', 'blurb', 'lore', 'key', 'allytips', 'enemytips')
+		fields = (	'name', 
+					'title',
+					'id',
+					'blurb',
+					'lore',
+					'key',
+					'allytips',
+					'enemytips',
+					'stats',
+					'tags',
+					'image'
+					)
 		#depth = 2
 
+
 	def create(self, validated_data):
-		allytips_data = validated_data.pop('allytips')
-		enemytips_data = validated_data.pop('enemytips')
-		champ = Champion.objects.create(**validated_data)
-		for tip in allytips_data:
-			AllyTip.objects.create(champ_name=champ, **tip)
-		for tip in enemytips_data:
-			EnemyTip.objects.create(champ_name=champ, **tip)
-		return champ
+		image_data = validated_data.pop('image')
+		tags_data = validated_data.pop('tags')
+		champion = Champion.objects.create(**validated_data)
+		Image.objects.create(champion=champion, **image_data)
+		for tag in tags_data:
+			try:
+				Tag.objects.create(champion=champion, **tag)
+			except:
+				pass
+		return champion
 
 	def update(self, instance, validated_data):
 		print "hi"

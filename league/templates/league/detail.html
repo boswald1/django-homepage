@@ -1,28 +1,50 @@
 {% extends 'league/base.html' %}
 
+
+
 {% block lolpage %}
-	<H1>{{ champ.name }}</H1>
-	<H2>{{ champ.title }}</H2>
+	<div class="row">
+		<div class="col-xs-2">
+			<img src={{ base_url}}{{ champ.image.get }}>
+		</div>
+		<div class="col-xs-10">
+			<H1>{{ champ.name }}</H1>
+			<H2>{{ champ.title }}</H2>
+		</div>
+	</div>
+
 	<div class="row-fluid">
 		{% autoescape off %}
 			{{ champ.lore  }}
 		{% endautoescape %}
 	</div>
+
 	<div class="row-fluid">
 		<H3>Ally Tips</H3>
 		<ul>
-			{% for tip in champ.allytips.all %}
+			{% for tip in champ.allytips %}
 				<li> {{ tip }} </li>
 			{% endfor %}
 		</ul>
 	</div>
+
 	<div class="row-fluid">
 		<H3>Enemy Tips</H3>
 		<ul>
-			{% for tip in champ.enemytips.all %}
+			{% for tip in champ.enemytips %}
 				<li> {{ tip }} </li>
 			{% endfor %}
 		</ul>
 	</div>
+
+	<div class="row-fluid">
+		<H3>Champion Statistics</H3>
+		<ul>
+			{% for stat, value in champ.stats.items %}
+				<li> {{ stat }} -- {{ value }}</li>
+			{% endfor %}	
+		</ul>
+	</div>
+
 
 {% endblock %}
