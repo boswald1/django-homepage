@@ -3,18 +3,14 @@ body, html {
 }
 
 body {
-    padding-top: 70px;
+    padding-top: 10px;
 	background-color: black;
 }
 
 #main {
 	background-color: white;
-	height: 100vh;
 }
 
-container {
-	background-color: red;
-}
 
 page-header {
 	background-color: blue;

@@ -3,6 +3,7 @@
 *.pyc
 .gaedata
 static/*
+*/migrations/*
 
 *.py[cod]
 *$py.class
