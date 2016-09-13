@@ -9,7 +9,7 @@ class Champion(models.Model):
 	name = models.CharField(max_length=30)
 	key = models.CharField(max_length=30)
 	title = models.CharField(max_length=30)
-	champ_id = models.IntegerField(primary_key=True)
+	id = models.IntegerField(primary_key=True)
 
 	# text stuff
 	blurb = models.CharField(max_length=2000)
@@ -20,6 +20,13 @@ class Champion(models.Model):
 
 class AllyTip(models.Model):
 	champ_name = models.ForeignKey(Champion, related_name='allytips')
+	tip = models.CharField(max_length=250)
+
+	def __str__(self):
+		return self.tip
+
+class EnemyTip(models.Model):
+	champ_name = models.ForeignKey(Champion, related_name='enemytips')
 	tip = models.CharField(max_length=250)
 
 	def __str__(self):

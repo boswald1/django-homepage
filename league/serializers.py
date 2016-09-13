@@ -1,27 +1,35 @@
 from rest_framework import serializers
-from league.models import Champion, AllyTip
+from league.models import Champion, AllyTip, EnemyTip
 
 class AllyTipSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = AllyTip
 		fields = ('tip',)
 
+class EnemyTipSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = EnemyTip
+		fields = ('tip',)
+
 
 
 class ChampionSerializer(serializers.ModelSerializer):
 	allytips = AllyTipSerializer(many=True)
+	enemytips = EnemyTipSerializer(many=True)
 
 	class Meta:
 		model = Champion
-		fields = ('name', 'title', 'champ_id', 'blurb', 'lore', 'key', 'allytips')
+		fields = ('name', 'title', 'id', 'blurb', 'lore', 'key', 'allytips', 'enemytips')
 		#depth = 2
 
 	def create(self, validated_data):
 		allytips_data = validated_data.pop('allytips')
+		enemytips_data = validated_data.pop('enemytips')
 		champ = Champion.objects.create(**validated_data)
 		for tip in allytips_data:
-			print tip
 			AllyTip.objects.create(champ_name=champ, **tip)
+		for tip in enemytips_data:
+			EnemyTip.objects.create(champ_name=champ, **tip)
 		return champ
 
 	def update(self, instance, validated_data):

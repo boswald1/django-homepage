@@ -3,7 +3,7 @@ body, html {
 }
 
 body {
-    padding-top: 70px;
+    padding-top: 10px;
 	background-color: black;
 }
 
@@ -11,9 +11,6 @@ body {
 	background-color: white;
 }
 
-container {
-	background-color: red;
-}
 
 page-header {
 	background-color: blue;
