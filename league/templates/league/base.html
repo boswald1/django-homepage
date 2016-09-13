@@ -1,18 +1,19 @@
 {% extends 'mysite/base.html' %}
 
+{% block stylez %}
+
+{% endblock %}
+
+{% block navbar-side %}
+	<ul class="nav navbar-inverse">
+		<li id="active"><a href="/league/">Home</a></li>
+		<li><a href="/league/champions/">Champions</a></li>
+	</ul>
+{% endblock %}
 
 
 {% block content %}	
-	<div class="row">
-			<nav class="navbar navbar-default">
-				<div class="container-fluid">
-					<ul class="nav navbar-nav">
-						<li><a href="/league/">Home</a></li>
-						<li><a href="/league/champions/">Champions</a></li>
-					</ul>
-				</div>
-			</nav>
-	</div>
+
 
 	
 	{% block lolpage %}
