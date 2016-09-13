@@ -2,22 +2,6 @@ body, html {
 	height: 100%;
 }
 
-body {
-    padding-top: 10px;
-	background-color: black;
-}
-
-#main {
-	background-color: white;
-}
 
 
-page-header {
-	background-color: blue;
-	height: 100px;
-}
-
-h1 a {
-	color: #FCA205;
-}
 
