@@ -26,7 +26,6 @@
 
 			{% block navbar %}
 
-				{% block navbar-top %}
 				<nav class="navbar navbar-default navbar-static-top">
 					<div class="container-fluid">
 
@@ -58,7 +57,6 @@
 						
 					</div>
 				</nav>
-				{% endblock %}
 
 				<div class="col-md-2" id="sidebar-wrapper">
 				{% block navbar-side %}
@@ -68,17 +66,18 @@
 			{% endblock %}
 
 				<div class="col-md-10">
-					<div class="container">
-
-						<div class="row">
+					<div class="row">
+						<div class="col-md-12">
 							{% block page_title %}
 							<h1 class="page-header">
 								{{ page_title }}
 							</h1>
 							{% endblock %}
 						</div>
+					</div>
 
-						<div class="row">
+					<div class="row ">
+						<div class="col-md-12">
 							{% block content %}
 							{% endblock %}
 						</div>
