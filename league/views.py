@@ -31,11 +31,17 @@ def detail(request, champ_id):
 
 	base_url = "//ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/"
 
+	hp_table = []
+	hp_table.append([str("Level"), 'Health'])
+	for x in range(18):
+		hp_table.append([str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))])
+
 
 	page_title = champ.name
 	context = {
 		'base_url': base_url,
 		'champ': champ,
+		'hp_table': hp_table,
 		#'page_title': page_title,
 	}
 	return render(request, 'league/detail.html', context)

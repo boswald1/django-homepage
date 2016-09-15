@@ -24,7 +24,7 @@
 			<div class="row">
 
 
-			{% block navbar %}
+				{% block navbar %}
 
 				<nav class="navbar navbar-default navbar-static-top">
 					<div class="container-fluid">
@@ -58,29 +58,25 @@
 					</div>
 				</nav>
 
-				<div class="col-md-2" id="sidebar-wrapper">
+				<div class="col-lg-2" id="sidebar-wrapper">
 				{% block navbar-side %}
 				{% endblock %}
 				</div>
 				
-			{% endblock %}
+				{% endblock %}
 
-				<div class="col-md-10">
-					<div class="row">
-						<div class="col-md-12">
+				<div class="col-lg-10 col-md-12">
+					<div class="row-fluid">
 							{% block page_title %}
 							<h1 class="page-header">
 								{{ page_title }}
 							</h1>
 							{% endblock %}
-						</div>
 					</div>
 
-					<div class="row ">
-						<div class="col-md-12">
-							{% block content %}
-							{% endblock %}
-						</div>
+					<div class="row-fluid">
+						{% block content %}
+						{% endblock %}
 					</div>
 				</div>
 
