@@ -21,31 +21,27 @@
 
 
 {% block page_title %}
-	<div class="col-md-12">
-		<div class="col-lg-2 col-xs-4">
-			<img src={{ base_url}}{{ champ.image.get }}>
-		</div>
-		<div class="col-xs-8">
-			<div class="row">
-				<H1 style="margin-top:10px;">{{ champ.name }}</H1>
+
+		<div class="col-md-12">
+			<div class="img-responsive" style="float:left">
+				<img src={{ base_url}}{{ champ.image.get }}>
 			</div>
-			<div class="row">
-				<H2>{{ champ.title }}</H2>
+			<div class="col-md-10 col-xs-8">
+				<H1 style="margin-top:10px;">{{ champ.name }}</br><small> {{ champ.title }}</small></H1>	
 			</div>
 		</div>
-	</div>
 {% endblock %}
 
 
 {% block lolpage %}
 
-	<div class="row-fluid">
+	<div class="row">
 		{% autoescape off %}
 			{{ champ.lore  }}
 		{% endautoescape %}
 	</div>
 
-	<div class="row-fluid">
+	<div class="row">
 
 		<div class="col-lg-6">
 			<H3>Ally Tips</H3>
@@ -66,17 +62,18 @@
 		</div>
 	</div>
 
-	<div class="row-fluid">
+	<div class="row">
 		<H3>Champion Statistics</H3>
-		<div class="panel">
-			<div id="hp_chart"></div>
+		<div class="col-lg-4 col-md-6">
+			<div class="panel">
+				<div id="hp_chart"></div>
+			</div>
 		</div>
-		<ul>
-			{% for stat, value in champ.stats.items %}
-				<li> {{ stat }} -- {{ value }}</li>
-			{% endfor %}	
-		</ul>
 	</div>
-
+	<ul>
+		{% for stat, value in champ.stats.items %}
+			<li> {{ stat }} -- {{ value }}</li>
+		{% endfor %}	
+	</ul>
 
 {% endblock %}
