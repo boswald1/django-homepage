@@ -46,7 +46,7 @@ class Skin(models.Model):
 	num = models.IntegerField()
 
 	def __str__(self):
-		return str("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + str(self.champion.name) + "_" + str(self.num) + ".jpg")
+		return str("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + str(self.champion.key) + "_" + str(self.num) + ".jpg")
 
 
 

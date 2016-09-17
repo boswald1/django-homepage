@@ -33,17 +33,21 @@ def detail(request, champ_id):
 
 
 	# Grab data for graph of health
-	champ_hp = []
-	champ_hp.append([str("Level"), 'Health'])
+	hp_data = []
+	hp_data.append(["Level", "Health"])
 	for x in range(18):
-		champ_hp.append([str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))])
+		hp_data.append([str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))])
 
+	from graphos.sources.simple import SimpleDataSource
+	from graphos.renderers.gchart import LineChart
+	champ_hp = SimpleDataSource(data=hp_data)
+	hp_chart = LineChart(champ_hp)
 
 	page_title = champ.name
 	context = {
 		'base_url': base_url,
 		'champ': champ,
-		'champ_hp': champ_hp,
+		'hp_chart': hp_chart,
 		#'page_title': page_title,
 	}
 	return render(request, 'league/detail.html', context)
