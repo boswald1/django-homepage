@@ -39,7 +39,14 @@ class Image(models.Model):
 	def __str__(self):
 		return self.full
 
+class Skin(models.Model):
+	champion = models.ForeignKey(Champion, related_name='skins')
+	id = models.IntegerField(primary_key=True)
+	name = models.CharField(max_length=50)	
+	num = models.IntegerField()
 
+	def __str__(self):
+		return str("http://ddragon.leagueoflegends.com/cdn/img/champion/splash/" + str(self.champion.name) + "_" + str(self.num) + ".jpg")
 
 
 
