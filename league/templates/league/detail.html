@@ -20,19 +20,21 @@
 {% endblock %}
 
 
+
 {% block page_title %}
-		<div class="col-md-12">
-			<div class="img-responsive">
-				<img src="{{ champ.skins }}">
+		<div class="row">
+			<div class="col-md-12">
+				{% for skin in champ.skins.all %}
+					{% if skin.num = 0 %}
+						<img src="{{ skin }}" class="img-responsive" style="padding: 10px">
+					{% endif %}
+				{% endfor %}
 			</div>
 		</div>
+
 		<div class="col-md-12">
-			<div class="img-responsive" style="float:left">
-				<img src={{ base_url}}{{ champ.image.get }}>
-			</div>
-			<div class="col-md-10 col-xs-8">
-				<H1 style="margin-top:10px;">{{ champ.name }}</br><small> {{ champ.title }}</small></H1>	
-			</div>
+			<img style="float:left; padding-right:5px;" src={{ base_url}}{{ champ.image.get }}>
+			<H1 style="padding-top:10px">{{ champ.name }}</br><small> {{ champ.title }}</small></H1>
 		</div>
 {% endblock %}
 
