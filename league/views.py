@@ -23,6 +23,22 @@ def champions(request):
 	}
 	return render(request, 'league/champs.html', context)
 
+def champion_average_hp(tag):
+	total_hp = 0
+	total_champs = 0
+	for champ in Champion.objects.filter(tags__contains=tag):
+		total_champs += 1
+		total_hp += champ.stats['hp']
+	return total_hp / total_champs
+
+def champion_average_hpperlevel(tag):
+	total_hp = 0
+	total_champs = 0
+	for champ in Champion.objects.filter(tags__contains=tag):
+		total_champs += 1
+		total_hp += champ.stats['hpperlevel']
+	return total_hp / total_champs
+
 def detail(request, champ_id):
 	try:
 		champ = Champion.objects.get(pk=champ_id)
@@ -34,9 +50,16 @@ def detail(request, champ_id):
 
 	# Grab data for graph of health
 	hp_data = []
-	hp_data.append(["Level", "Health"])
+	hp_data.append(["Level", champ.name])
+	for tag in champ.tags:
+		hp_data[0].append(str(tag))
 	for x in range(18):
-		hp_data.append([str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))])
+		row = [str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))]
+		for tag in champ.tags:
+			champ_avg_hp = champion_average_hp(tag)
+			champ_avg_hpperlevel = champion_average_hpperlevel(tag)
+			row.append(champ_avg_hp + x * champ_avg_hpperlevel)
+		hp_data.append(row)
 
 	from graphos.sources.simple import SimpleDataSource
 	from graphos.renderers.gchart import LineChart

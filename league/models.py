@@ -4,8 +4,7 @@ from django.db import models
 import jsonfield
 
 
-class Tag(models.Model):
-	tag = models.CharField(max_length=30, unique=True)
+
 
 class Champion(models.Model):
 	# basic info
@@ -14,11 +13,11 @@ class Champion(models.Model):
 	title = models.CharField(max_length=30)
 	id = models.IntegerField(primary_key=True)
 	stats = jsonfield.JSONField()
-	tags = models.ManyToManyField(Tag, related_name='champion')
 
 	# text stuff
 	blurb = models.CharField(max_length=2000)
 	lore = models.CharField(max_length=4500)
+	tags = jsonfield.JSONField()
 	allytips = jsonfield.JSONField()
 	enemytips = jsonfield.JSONField()
 

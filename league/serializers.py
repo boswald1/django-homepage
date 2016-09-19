@@ -1,5 +1,5 @@
 import json
-from league.models import Champion, Image, Tag, Skin
+from league.models import Champion, Image, Skin
 from rest_framework import serializers
 
 
@@ -20,13 +20,14 @@ class SkinSerializer(serializers.ModelSerializer):
 				)
 
 
+
 class ChampionSerializer(serializers.ModelSerializer):
 	image = ImageSerializer()
 	skins = SkinSerializer(many=True)
+	tags = serializers.JSONField()
 	allytips = serializers.JSONField()
 	enemytips = serializers.JSONField()
 	stats = serializers.JSONField()
-	tags = serializers.JSONField()
 
 	class Meta:
 		model = Champion
@@ -49,7 +50,6 @@ class ChampionSerializer(serializers.ModelSerializer):
 	def create(self, validated_data):
 		# Pop off data which must be serialized seperately
 		image_data = validated_data.pop('image')
-		tags_data = validated_data.pop('tags')
 		skin_data = validated_data.pop('skins')
 
 		# create model instances for singular objects
@@ -57,11 +57,6 @@ class ChampionSerializer(serializers.ModelSerializer):
 		Image.objects.create(champion=champion, **image_data)
 
 		# create model instances for multiple objects
-		for tag in tags_data:
-			try:
-				Tag.objects.create(champion=champion, **tag)
-			except:
-				pass
 
 		for skin in skin_data:
 			try:
