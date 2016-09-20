@@ -1,5 +1,11 @@
 {% extends 'league/base.html' %}
 
 {% block content %}
-{{ found_entries }}
+{% for entry in found_entries %}
+	<a href="/league/summoner/{{ entry }}">{{ entry }}</a>
+{% endfor %}
+{% if errors %}
+	{{errors}}
+	{{data}}
+{% endif %}
 {% endblock %}

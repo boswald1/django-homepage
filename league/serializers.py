@@ -1,5 +1,5 @@
-import json
-from league.models import Champion, Image, Skin, Summoner
+import json, requests
+from league.models import Champion, Image, Match, Skin, Summoner
 from rest_framework import serializers
 
 
@@ -77,7 +77,30 @@ class ChampionSerializer(serializers.ModelSerializer):
 		return instance
 
 
+
+
+
+
+
+
+
+class MatchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Match
+		fields = (	'champion',
+					'summoner',
+					'timestamp',
+					'region',
+					'queue',
+					'season',
+					'matchId',
+					'role',
+					'lane'
+				)
+
+
 class SummonerSerializer(serializers.ModelSerializer):
+	matches = MatchSerializer()
 	class Meta:
 		model = Summoner
 		fields = (	'id', 
@@ -85,6 +108,25 @@ class SummonerSerializer(serializers.ModelSerializer):
 					'profileIconId',
 					'revisionDate',
 					'summonerLevel',
+					'matches'
 				)
-			
+
+	def create(self, validated_data):
+		summ = Summoner.objects.create(**validated_data)
+		url = 'https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + str(summ.id) +'?api_key=80a03926-6e55-4045-bf6f-692ec7007ca1'
+		match_data = requests.get(url).json()['matches']
+
+		for match in match_data:
+			print match, "hi"
+			Summoner.objects.create(summoner=summ, **match)
+
+		return summ
+
+
+
+
+
+
+
+		
 

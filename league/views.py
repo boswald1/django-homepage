@@ -76,23 +76,46 @@ def detail(request, champ_id):
 	return render(request, 'league/detail.html', context)
 
 
-import search
+from models import Summoner
+from serializers import SummonerSerializer
+import json, requests, search
 def search_results(request):
-	print "hi"
 	query_string = ''
 	found_entries = None
 	if ('q' in request.GET) and request.GET['q'].strip():
 		query_string = request.GET['q']
 		
-		entry_query = search.get_query(query_string, ['title', 'body',])
-		
-		found_entries = Summoner.objects.filter(entry_query).order_by('-pub_date')
-
-	return render_to_response('league/search_results.html',
-						  { 'query_string': query_string, 'found_entries': found_entries },
-						  context_instance=RequestContext(request))
+		entry_query = search.get_query(query_string, ['name',])
+		found_entries = Summoner.objects.filter(entry_query).order_by('-name')
 
 
+
+		if len(found_entries) == 0:
+			summoner_data = requests.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + query_string + '?api_key=80a03926-6e55-4045-bf6f-692ec7007ca1')
+			summoner_data = summoner_data.json()
+			serializer = SummonerSerializer(data=summoner_data[query_string])
+			if serializer.is_valid():
+				serializer.save()
+			entry_query = search.get_query(query_string, ['name',])
+			found_entries = Summoner.objects.filter(entry_query).order_by('-name')
+
+
+	context = { 
+				'query_string': query_string,
+				'found_entries': found_entries,
+				'errors': serializer.errors,
+				'data': summoner_data,
+			}
+	return render(request, 'league/search_results.html', context)
+
+
+def summoner_detail(request, summoner_name):
+	summoner = Summoner.objects.get(name=summoner_name)
+	context =	{ 
+				'page_title': summoner_name,
+				'summoner': summoner
+				}
+	return render(request, 'league/summoner_detail.html', context)
 
 
 # REST API views

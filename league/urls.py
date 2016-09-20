@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^champions/$', views.champions),
     url(r'^champions/(?P<champ_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^search/', views.search_results, name='search_results'),
+    url(r'^summoner/(?P<summoner_name>[a-zA-Z0-9]+)/$', views.summoner_detail, name='summoner_detail'),
 ]
 
 

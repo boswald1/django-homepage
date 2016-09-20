@@ -55,10 +55,77 @@ class Skin(models.Model):
 class Summoner(models.Model):
 	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50, unique=True)
+	#matches = models.ForeignKey(Match, many=True, blank=True)
 	profileIconId = models.IntegerField()
-	revisionDate = models.IntegerField()
+	revisionDate = models.BigIntegerField()
 	summonerLevel = models.IntegerField()
 
+	def __str__(self):
+		return self.name
+
+
+class Match(models.Model):
+	champion = models.ForeignKey(Champion, on_delete=models.CASCADE)
+	summoner = models.ForeignKey(Summoner, related_name='matches', on_delete=models.CASCADE)
+	
+	timestamp = models.BigIntegerField()
+	matchId = models.BigIntegerField(primary_key=True)
+
+
+	# These fields should also be choices
+	queue = models.CharField(max_length=50)
+	season = models.CharField(max_length=50)
+	role = models.CharField(max_length=25)
+	platformId = models.CharField(max_length=10)
+
+	# lane options
+	MID = 'MID'
+	TOP = 'TOP'
+	BOTTOM = 'BOT'
+	SUPP = 'SUP'
+	JUNGLE = 'JNG'
+	lane_choices = (
+			(MID, 'Middle'),
+			(TOP, 'Top'),
+			(BOTTOM, 'Marksman'),
+			(SUPP, 'Support'),
+			(JUNGLE, 'Jungle'),
+		)
+	lane = models.CharField(
+			max_length=3,
+			choices = lane_choices,
+		)
+
+	# region options
+	NORTH_AMERICA = 'NA'
+	EU_WEST = 'EUW'
+	EU_NORDIC_EAST = 'EUNE'
+	LATIN_AMERICA_NORTH = 'LAN'
+	LATIN_AMERICA_SOUTH = 'LAS'
+	BRAZIL = 'BR'
+	JAPAN = 'JP'
+	RUSSIA = 'RU'
+	TURKEY = 'TR'
+	OCEANA = 'OCE'
+	REP_OF_KOREA = 'KR'
+	REGION_CHOICES = (
+			(NORTH_AMERICA, 'North America'),
+			(EU_WEST, 'Europe West'),
+			(EU_NORDIC_EAST, 'Europe Nordic and East'),
+			(LATIN_AMERICA_NORTH, 'Latin America North'),
+			(LATIN_AMERICA_SOUTH, 'Latin America South'),
+			(BRAZIL, 'Brazil'),
+			(JAPAN, 'Japan'),
+			(RUSSIA, 'Russia'),
+			(TURKEY, 'Turkey'),
+			(OCEANA, 'Oceana'),
+			(REP_OF_KOREA, 'Korea'),
+		)
+	region = models.CharField(
+			max_length=2,
+			choices=REGION_CHOICES,
+			default='NORTH_AMERICA'
+		)
 
 
 
