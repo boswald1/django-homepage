@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^champions/$', views.champions),
     url(r'^champions/(?P<champ_id>[0-9]+)/$', views.detail, name='detail'),
+    url(r'^search/q=(?P<query>[A-z]+)$', views.search),
 ]
 
 
@@ -20,6 +21,7 @@ urlpatterns += [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/champions/$', views.ChampionList.as_view()),
     url(r'^api/champions/(?P<pk>[0-9]+)/$', views.ChampionDetail.as_view()),
+
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

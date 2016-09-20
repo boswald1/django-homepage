@@ -1,5 +1,5 @@
 import json
-from league.models import Champion, Image, Skin
+from league.models import Champion, Image, Skin, Summoner
 from rest_framework import serializers
 
 
@@ -77,4 +77,14 @@ class ChampionSerializer(serializers.ModelSerializer):
 		return instance
 
 
+class SummonerSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Summoner
+		fields = (	'id', 
+					'name',
+					'profileIconId',
+					'revisionDate',
+					'summonerLevel',
+				)
+			
 

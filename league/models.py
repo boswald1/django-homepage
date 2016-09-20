@@ -52,4 +52,19 @@ class Skin(models.Model):
 
 
 
+class Summoner(models.Model):
+	id = models.IntegerField(primary_key=True)
+	name = models.CharField(max_length=50, unique=True)
+	profileIconId = models.IntegerField()
+	revisionDate = models.IntegerField()
+	summonerLevel = models.IntegerField()
+
+
+
+
+
+
+
+
+
 	
