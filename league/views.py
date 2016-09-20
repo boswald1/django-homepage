@@ -93,27 +93,30 @@ def search_results(request):
 		if len(found_entries) == 0:
 			summoner_data = requests.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + query_string + '?api_key=80a03926-6e55-4045-bf6f-692ec7007ca1')
 			summoner_data = summoner_data.json()
-			serializer = SummonerSerializer(data=summoner_data[query_string])
+			serializer = SummonerSerializer(data=summoner_data[str(query_string).lower()])
 			if serializer.is_valid():
 				serializer.save()
 			entry_query = search.get_query(query_string, ['name',])
 			found_entries = Summoner.objects.filter(entry_query).order_by('-name')
 
-
+	page_title = "Search Results for '{}'".format(str(query_string))
 	context = { 
 				'query_string': query_string,
 				'found_entries': found_entries,
-				'errors': serializer.errors,
-				'data': summoner_data,
+				'page_title': page_title,
 			}
 	return render(request, 'league/search_results.html', context)
 
 
 def summoner_detail(request, summoner_name):
+	base_url = "//ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/"
 	summoner = Summoner.objects.get(name=summoner_name)
+	recent_matches = summoner.matches.all().order_by('-timestamp')[:10]
 	context =	{ 
+				'base_url': base_url,
 				'page_title': summoner_name,
-				'summoner': summoner
+				'recent_matches': recent_matches,
+				'summoner': summoner,
 				}
 	return render(request, 'league/summoner_detail.html', context)
 

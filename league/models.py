@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-import jsonfield
+import datetime, jsonfield
 
 
 
@@ -50,12 +50,12 @@ class Skin(models.Model):
 
 
 
-
+import django.utils.timezone
 
 class Summoner(models.Model):
 	id = models.IntegerField(primary_key=True)
 	name = models.CharField(max_length=50, unique=True)
-	#matches = models.ForeignKey(Match, many=True, blank=True)
+	updated = models.DateTimeField(default=django.utils.timezone.now)
 	profileIconId = models.IntegerField()
 	revisionDate = models.BigIntegerField()
 	summonerLevel = models.IntegerField()
@@ -63,6 +63,8 @@ class Summoner(models.Model):
 	def __str__(self):
 		return self.name
 
+	def profileIcon_url(self):
+		return '//ddragon.leagueoflegends.com/cdn/6.19.1/img/profileicon/{}.png'.format(self.profileIconId)
 
 class Match(models.Model):
 	champion = models.ForeignKey(Champion, on_delete=models.CASCADE)
@@ -81,7 +83,7 @@ class Match(models.Model):
 	# lane options
 	MID = 'MID'
 	TOP = 'TOP'
-	BOTTOM = 'BOT'
+	BOTTOM = 'BOTTOM'
 	SUPP = 'SUP'
 	JUNGLE = 'JNG'
 	lane_choices = (
@@ -92,7 +94,7 @@ class Match(models.Model):
 			(JUNGLE, 'Jungle'),
 		)
 	lane = models.CharField(
-			max_length=3,
+			max_length=10,
 			choices = lane_choices,
 		)
 
@@ -126,7 +128,6 @@ class Match(models.Model):
 			choices=REGION_CHOICES,
 			default='NORTH_AMERICA'
 		)
-
 
 
 

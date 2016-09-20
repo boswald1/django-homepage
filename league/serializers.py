@@ -85,6 +85,7 @@ class ChampionSerializer(serializers.ModelSerializer):
 
 
 class MatchSerializer(serializers.ModelSerializer):
+	#champion = serializers.PrimaryKeyRelatedField(read_only='True')
 	class Meta:
 		model = Match
 		fields = (	'champion',
@@ -100,7 +101,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
 
 class SummonerSerializer(serializers.ModelSerializer):
-	matches = MatchSerializer()
+	matches = MatchSerializer(many=True, required=False)
 	class Meta:
 		model = Summoner
 		fields = (	'id', 
@@ -113,12 +114,17 @@ class SummonerSerializer(serializers.ModelSerializer):
 
 	def create(self, validated_data):
 		summ = Summoner.objects.create(**validated_data)
-		url = 'https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + str(summ.id) +'?api_key=80a03926-6e55-4045-bf6f-692ec7007ca1'
-		match_data = requests.get(url).json()['matches']
 
+		# Get summoner recent match history
+		url = 'https://na.api.pvp.net/api/lol/na/v2.2/matchlist/by-summoner/' + str(summ.id) +'?api_key=80a03926-6e55-4045-bf6f-692ec7007ca1'
+		match_data = requests.get(url)
+		match_data = match_data.json()
+		match_data = match_data['matches']
+	
 		for match in match_data:
-			print match, "hi"
-			Summoner.objects.create(summoner=summ, **match)
+			champ_id = int(match.pop('champion'))
+			m = Match.objects.create(summoner=summ, champion=Champion.objects.get(pk=champ_id), **match)
+
 
 		return summ
 

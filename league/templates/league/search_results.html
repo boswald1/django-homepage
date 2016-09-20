@@ -1,9 +1,11 @@
 {% extends 'league/base.html' %}
 
 {% block content %}
-{% for entry in found_entries %}
-	<a href="/league/summoner/{{ entry }}">{{ entry }}</a>
-{% endfor %}
+<div class='col-lg-12'>
+	{% for entry in found_entries %}
+		<a href="/league/summoner/{{ entry }}"><img src='{{entry.profileIcon_url}}'> <b>{{ entry }}</b></a>
+	{% endfor %}
+</div>
 {% if errors %}
 	{{errors}}
 	{{data}}
