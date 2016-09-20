@@ -7,7 +7,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^champions/$', views.champions),
     url(r'^champions/(?P<champ_id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^search/q=(?P<query>[A-z]+)$', views.search),
+    url(r'^search/', views.search_results, name='search_results'),
 ]
 
 

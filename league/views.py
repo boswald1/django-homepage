@@ -76,20 +76,21 @@ def detail(request, champ_id):
 	return render(request, 'league/detail.html', context)
 
 
+import search
+def search_results(request):
+	print "hi"
+	query_string = ''
+	found_entries = None
+	if ('q' in request.GET) and request.GET['q'].strip():
+		query_string = request.GET['q']
+		
+		entry_query = search.get_query(query_string, ['title', 'body',])
+		
+		found_entries = Summoner.objects.filter(entry_query).order_by('-pub_date')
 
-def search(request):
-    query_string = ''
-    found_entries = None
-    if ('q' in request.GET) and request.GET['q'].strip():
-        query_string = request.GET['q']
-        
-        entry_query = get_query(query_string, ['title', 'body',])
-        
-        found_entries = Entry.objects.filter(entry_query).order_by('-pub_date')
-
-    return render_to_response('league/search_results.html',
-                          { 'query_string': query_string, 'found_entries': found_entries },
-                          context_instance=RequestContext(request))
+	return render_to_response('league/search_results.html',
+						  { 'query_string': query_string, 'found_entries': found_entries },
+						  context_instance=RequestContext(request))
 
 
 
@@ -106,9 +107,9 @@ class ChampionList(generics.ListCreateAPIView):
 	serializer_class = ChampionSerializer
 
 class ChampionDetail(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Retrieve, update or delete a champion instance.
-    """
-    queryset = Champion.objects.all()
-    serializer_class = ChampionSerializer
+	"""
+	Retrieve, update or delete a champion instance.
+	"""
+	queryset = Champion.objects.all()
+	serializer_class = ChampionSerializer
 
