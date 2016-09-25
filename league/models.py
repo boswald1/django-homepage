@@ -74,7 +74,7 @@ class Match(models.Model):
 	matchId = models.BigIntegerField(primary_key=True)
 
 
-	# These fields should also be choices
+	# TODO: These fields should also be choices
 	queue = models.CharField(max_length=50)
 	season = models.CharField(max_length=50)
 	role = models.CharField(max_length=25)
