@@ -38,54 +38,51 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '-c&qt=71oi^e5s8(ene*$b89^#%*0xeve$x_trs91veok9#0h0'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'mysite',
-    'blog',
-    'library',
-    'league',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'mysite',
+	'blog',
+	'library',
+	'league',
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['mysite/templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': ['mysite/templates'],
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
@@ -97,27 +94,44 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # [START db_setup]
 import os
 if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
-    # Running on production App Engine, so use a Google Cloud SQL database.
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '/cloudsql/named-archway-141900:us-central1:mydb2',
-            'NAME': 'blog',
-            'USER': 'root',
-            'PASSWORD': 'X8S-WST-oCy-EcB'
-        }
-    }
+	# Running on production App Engine, so use a Google Cloud SQL database.
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.mysql',
+			'HOST': '/cloudsql/named-archway-141900:us-central1:mydb2',
+			'NAME': 'blog',
+			'USER': 'root',
+			'PASSWORD': 'X8S-WST-oCy-EcB'
+		}
+	}
+	# SECURITY WARNING: don't run with debug turned on in production!
+	DEBUG = False
+
+	ALLOWED_HOSTS = ['*']
+	STATIC_URL = '/static/'
 else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'blog',
-            'USER': 'root',
-            'PASSWORD': 'X8S-WST-oCy-EcB',
-            'HOST': '104.197.205.148',
-            'PORT': '3306',
-        }
-    }
+	'''
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.mysql',
+			'NAME': 'blog',
+			'USER': 'root',
+			'PASSWORD': 'X8S-WST-oCy-EcB',
+			'HOST': '104.197.205.148',
+			'PORT': '3306',
+		}
+	}
+	'''
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.sqlite3',
+			'NAME': 'mydatabase',
+		}
+	}
+	# SECURITY WARNING: don't run with debug turned on in production!
+	DEBUG = True
+	ALLOWED_HOSTS = []
+	STATIC_URL = 'http://127.0.0.1:80/'
 # [END db_setup]
 
 # Internationalization
@@ -138,4 +152,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_ROOT='static'
-STATIC_URL = '/static/'

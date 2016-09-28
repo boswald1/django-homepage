@@ -4,6 +4,7 @@
 .gaedata
 static/*
 */migrations/*
+mydatabase
 
 *.py[cod]
 *$py.class
