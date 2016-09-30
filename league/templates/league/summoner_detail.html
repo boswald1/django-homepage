@@ -1,0 +1,12 @@
+{% extends 'league/base.html' %}
+
+{% block content %}
+<div class='col-lg-12'>
+	<H2>Recent Matches</H2>
+	<ul>
+	{% for match in recent_matches %}
+		<li><img style="padding-bottom: 10px;" src='{{base_url}}{{match.champion.image.get}}'> {{match.matchId}}</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endblock %}
