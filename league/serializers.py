@@ -122,7 +122,7 @@ class SummonerSerializer(serializers.ModelSerializer):
 	
 		for match in match_data:
 			champ_id = int(match.pop('champion'))
-			m = Match.objects.create(summoner=summ, champion=Champion.objects.get(pk=champ_id), **match)
+			m = Match.objects.create(summoner=summ, champion=Champion.objects.get(id=champ_id), **match)
 
 
 		return summ

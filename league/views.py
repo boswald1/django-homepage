@@ -4,6 +4,8 @@ from django.template import loader
 
 from .models import Champion
 
+API_KEY="80a03926-6e55-4045-bf6f-692ec7007ca1"
+
 # Create your views here.
 def index(request):
 	page_title = "League of Legends Information Station"
@@ -53,6 +55,7 @@ def detail(request, champ_id):
 	hp_data.append(["Level", champ.name])
 	for tag in champ.tags:
 		hp_data[0].append(str(tag))
+	hp_data[0].append('All Champs')
 	for x in range(18):
 		row = [str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))]
 		for tag in champ.tags:
@@ -60,6 +63,10 @@ def detail(request, champ_id):
 			champ_avg_hpperlevel = champion_average_hpperlevel(tag)
 			row.append(champ_avg_hp + x * champ_avg_hpperlevel)
 		hp_data.append(row)
+
+		champ_avg_hp = champion_average_hp('')
+		champ_avg_hpperlevel = champion_average_hpperlevel('')
+		row.append(champ_avg_hp + x * champ_avg_hpperlevel)
 
 	from graphos.sources.simple import SimpleDataSource
 	from graphos.renderers.gchart import LineChart
@@ -91,7 +98,7 @@ def search_results(request):
 
 
 		if len(found_entries) == 0:
-			summoner_data = requests.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + query_string + '?api_key=80a03926-6e55-4045-bf6f-692ec7007ca1')
+			summoner_data = requests.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + query_string + '?api_key=' + API_KEY)
 			summoner_data = summoner_data.json()
 			serializer = SummonerSerializer(data=summoner_data[str(query_string).lower()])
 			if serializer.is_valid():
