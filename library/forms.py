@@ -23,3 +23,9 @@ class BookForm(forms.ModelForm):
 	class Meta: 
 		model = Book
 		fields = ['title', 'publication_year', 'author', 'front_cover', 'back_cover', 'publication_page']
+
+
+
+
+#Google Books
+# key=AIzaSyChGpaRLFete7yMtuuSILmW1HZzlV6VgMY

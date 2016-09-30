@@ -67,7 +67,6 @@ class ChampionSerializer(serializers.ModelSerializer):
 		return champion
 
 	def update(self, instance, validated_data):
-		print "hi"
 		instance.name = validated_data.get('name', instance.name)
 		instance.title = validated_data.get('title', instance.title)
 		instance.champ_id = validated_data.get('champ_id', instance.champ_id)
