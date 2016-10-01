@@ -25,21 +25,21 @@ def champions(request):
 	}
 	return render(request, 'league/champs.html', context)
 
-def champion_average_hp(tag):
-	total_hp = 0
+def champion_average_stat(tag, stat):
+	total_stat = 0
 	total_champs = 0
 	for champ in Champion.objects.filter(tags__contains=tag):
 		total_champs += 1
-		total_hp += champ.stats['hp']
-	return total_hp / total_champs
+		total_stat += champ.stats[stat]
+	return total_stat / total_champs
 
-def champion_average_hpperlevel(tag):
-	total_hp = 0
+def champion_average_statperlevel(tag, stat):
+	total_stat = 0
 	total_champs = 0
 	for champ in Champion.objects.filter(tags__contains=tag):
 		total_champs += 1
-		total_hp += champ.stats['hpperlevel']
-	return total_hp / total_champs
+		total_stat += champ.stats[stat + 'perlevel']
+	return total_stat / total_champs
 
 
 
@@ -53,7 +53,7 @@ def initialize_stat_charts(champ):
 		if stat[-8:] == "perlevel":
 			continue	
 
-		elif stat == "attackspeedoffset" or stat == "attackrange" or stat == "movespeed":
+		elif stat == "attackspeedoffset" or stat == "attackrange" or stat == "movespeed" or stat == "crit":
 			continue
 		else:
 			stat_data = []
@@ -64,14 +64,14 @@ def initialize_stat_charts(champ):
 			for x in range(18):
 				row = [str(x+1), (champ.stats[stat] + (x * champ.stats[stat + 'perlevel']))]
 				for tag in champ.tags:
-					champ_avg_hp = champion_average_hp(tag)
-					champ_avg_hpperlevel = champion_average_hpperlevel(tag)
+					champ_avg_hp = champion_average_stat(tag, stat)
+					champ_avg_hpperlevel = champion_average_statperlevel(tag, stat)
 					row.append(champ_avg_hp + x * champ_avg_hpperlevel)
 				stat_data.append(row)
 
-				champ_avg_hp = champion_average_hp('')
-				champ_avg_hpperlevel = champion_average_hpperlevel('')
-				row.append(champ_avg_hp + x * champ_avg_hpperlevel)
+				champ_avg_stat = champion_average_stat('', stat)
+				champ_avg_statperlevel = champion_average_statperlevel('', stat)
+				row.append(champ_avg_stat + x * champ_avg_statperlevel)
 
 			champ_stat = SimpleDataSource(data=stat_data)
 			stat_chart = LineChart(champ_stat, options={'title': stat})
