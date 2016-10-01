@@ -2,8 +2,11 @@
 
 {% block content %}
 <div class='col-lg-12'>
-	{% for entry in found_entries %}
+	{% for entry in found_summoners %}
 		<a href="/league/summoner/{{ entry }}"><img src='{{entry.profileIcon_url}}'> <b>{{ entry }}</b></a>
+	{% endfor %}
+	{% for entry in found_champs %}
+		<a href="/league/champions/{{ entry.id }}"><img src='{{entry.image.get}}'> <b>{{ entry }}</b></a>
 	{% endfor %}
 </div>
 {% if errors %}

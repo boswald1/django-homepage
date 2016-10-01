@@ -57,11 +57,13 @@
 <div class="row">
 	<div class="col-lg-12">
 		<H3>Champion Statistics</H3>
-		<div class="col-lg-4 col-md-6">
-			<div class="panel">
-				{{ hp_chart.as_html }}
+		{% for chart in stat_charts %}
+			<div class="col-lg-4 col-md-6">
+				<div class="panel">
+					{{ chart.as_html }}
+				</div>
 			</div>
-		</div>
+		{% endfor %}
 	</div>
 </div>
 <ul>

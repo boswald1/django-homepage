@@ -22,6 +22,9 @@ class Champion(models.Model):
 	enemytips = jsonfield.JSONField()
 
 
+	def get_url(self):
+		return "league/champions/" + self.name
+
 	def __str__(self):
 		return self.name
 

@@ -131,7 +131,7 @@ else:
 	# SECURITY WARNING: don't run with debug turned on in production!
 	DEBUG = True
 	ALLOWED_HOSTS = []
-	STATIC_URL = 'http://127.0.0.1:80/'
+	STATIC_URL = 'http://127.0.0.1:8080/'
 # [END db_setup]
 
 # Internationalization

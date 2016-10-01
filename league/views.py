@@ -41,6 +41,45 @@ def champion_average_hpperlevel(tag):
 		total_hp += champ.stats['hpperlevel']
 	return total_hp / total_champs
 
+
+
+from graphos.sources.simple import SimpleDataSource
+from graphos.renderers.gchart import LineChart
+def initialize_stat_charts(champ):
+	# Grab data for graphs
+	stat_charts = []
+
+	for stat in champ.stats:
+		if stat[-8:] == "perlevel":
+			continue	
+
+		elif stat == "attackspeedoffset" or stat == "attackrange" or stat == "movespeed":
+			continue
+		else:
+			stat_data = []
+			stat_data.append(["Level", champ.name])
+			for tag in champ.tags:
+				stat_data[0].append(str(tag))
+			stat_data[0].append('All Champs')
+			for x in range(18):
+				row = [str(x+1), (champ.stats[stat] + (x * champ.stats[stat + 'perlevel']))]
+				for tag in champ.tags:
+					champ_avg_hp = champion_average_hp(tag)
+					champ_avg_hpperlevel = champion_average_hpperlevel(tag)
+					row.append(champ_avg_hp + x * champ_avg_hpperlevel)
+				stat_data.append(row)
+
+				champ_avg_hp = champion_average_hp('')
+				champ_avg_hpperlevel = champion_average_hpperlevel('')
+				row.append(champ_avg_hp + x * champ_avg_hpperlevel)
+
+			champ_stat = SimpleDataSource(data=stat_data)
+			stat_chart = LineChart(champ_stat, options={'title': stat})
+			stat_charts.append(stat_chart)
+	return stat_charts
+
+
+
 def detail(request, champ_id):
 	try:
 		champ = Champion.objects.get(pk=champ_id)
@@ -50,34 +89,12 @@ def detail(request, champ_id):
 	base_url = "//ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/"
 
 
-	# Grab data for graph of health
-	hp_data = []
-	hp_data.append(["Level", champ.name])
-	for tag in champ.tags:
-		hp_data[0].append(str(tag))
-	hp_data[0].append('All Champs')
-	for x in range(18):
-		row = [str(x+1), (champ.stats['hp'] + (x * champ.stats['hpperlevel']))]
-		for tag in champ.tags:
-			champ_avg_hp = champion_average_hp(tag)
-			champ_avg_hpperlevel = champion_average_hpperlevel(tag)
-			row.append(champ_avg_hp + x * champ_avg_hpperlevel)
-		hp_data.append(row)
-
-		champ_avg_hp = champion_average_hp('')
-		champ_avg_hpperlevel = champion_average_hpperlevel('')
-		row.append(champ_avg_hp + x * champ_avg_hpperlevel)
-
-	from graphos.sources.simple import SimpleDataSource
-	from graphos.renderers.gchart import LineChart
-	champ_hp = SimpleDataSource(data=hp_data)
-	hp_chart = LineChart(champ_hp)
-
+	stat_charts = initialize_stat_charts(champ)	
 	page_title = champ.name
 	context = {
 		'base_url': base_url,
 		'champ': champ,
-		'hp_chart': hp_chart,
+		'stat_charts': stat_charts,
 		#'page_title': page_title,
 	}
 	return render(request, 'league/detail.html', context)
@@ -88,28 +105,30 @@ from serializers import SummonerSerializer
 import json, requests, search
 def search_results(request):
 	query_string = ''
-	found_entries = None
+	found_summoners = None
+	found_champs = None
 	if ('q' in request.GET) and request.GET['q'].strip():
 		query_string = request.GET['q']
 		
 		entry_query = search.get_query(query_string, ['name',])
-		found_entries = Summoner.objects.filter(entry_query).order_by('-name')
+		found_summoners = Summoner.objects.filter(entry_query).order_by('-name')
+		found_champs = Champion.objects.filter(entry_query).order_by('-name')
 
 
-
-		if len(found_entries) == 0:
+		if len(found_summoners) == 0 and len(found_champs) == 0:
 			summoner_data = requests.get('https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + query_string + '?api_key=' + API_KEY)
 			summoner_data = summoner_data.json()
 			serializer = SummonerSerializer(data=summoner_data[str(query_string).lower()])
 			if serializer.is_valid():
 				serializer.save()
 			entry_query = search.get_query(query_string, ['name',])
-			found_entries = Summoner.objects.filter(entry_query).order_by('-name')
+			found_summoners = Summoner.objects.filter(entry_query).order_by('-name')
 
 	page_title = "Search Results for '{}'".format(str(query_string))
 	context = { 
 				'query_string': query_string,
-				'found_entries': found_entries,
+				'found_summoners': found_summoners,
+				'found_champs': found_champs,
 				'page_title': page_title,
 			}
 	return render(request, 'league/search_results.html', context)
