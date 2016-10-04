@@ -10,11 +10,30 @@
 
 {% block page_title %}
 <div class="col-lg-12">
-	{% for skin in champ.skins.all %}
-		{% if skin.num == 0 %}
-			<img src="{{ skin }}" class="img-responsive center-block" style="padding: 10px">
-		{% endif %}
-	{% endfor %}
+	<div id="champ_skins_splash" class="carousel slide" data-ride="carousel">
+		<ol class="carousel-indicators">
+			{% for skin in champ.skins.all %}
+			<li data-target="#champ_skins_splash" data-slide-to="{{skin.num}}"></li>
+			{% endfor %}
+		</ol>
+
+		<div class="carousel-inner" role="listbox">
+			{% for skin in champ.skins.all %}
+			<div class="item{% if skin.num == 0 %} active{% endif %}">
+				<img src="{{ skin }}" class="img-responsive center-block" style="padding: 10px">
+			</div>
+			{% endfor %}
+		</div>
+
+		<a class="left carousel-control" href="#champ_skins_splash" role="button" data-slide="prev">
+		    <span class="icon-prev" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		</a>
+		<a class="right carousel-control" href="#champ_skins_splash" role="button" data-slide="next">
+		    <span class="icon-next" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		</a>		
+	</div>
 </div>
 
 <div class="col-md-12">
@@ -57,18 +76,32 @@
 <div class="row">
 	<div class="col-lg-12">
 		<H3>Champion Statistics</H3>
+
+		<ul class="nav nav-tabs" id="statChartTab">
 		{% for chart in stat_charts %}
-			<div class="col-lg-4 col-md-6">
-				<div class="panel">
-					{{ chart.as_html }}
-				</div>
-			</div>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" href="#{{ chart.get_html_id }}" role="tab" aria-controls="{{chart.get_html_id}}">{{ chart.get_html_id }}</a>
+			</li>
 		{% endfor %}
+		</ul>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="{{ chart.get_html_id }}" role="tabpanel">
+				{{stat_charts.0.as_html}}
+			</div>
+		{% for chart in stat_charts %}
+			<div class="tab-pane" id="{{ chart.get_html_id }}" role="tabpanel">
+				{{ chart.as_html }}
+			</div>	
+		{% endfor %}
+		</div>
 	</div>
 </div>
-<ul>
-	{% for stat, value in champ.stats.items %}
-		<li> {{ stat }} -- {{ value }}</li>
-	{% endfor %}	
-</ul>
+
+<script>
+  $(function () {
+    $('#statChartTab a:last').tab('show')
+  })
+</script>
+
 {% endblock %}
