@@ -1,0 +1,17 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+	<H2>{{ book.author }}</H2>
+	{% load staticfiles %}
+	<div class="row">
+		<div class="col-sm-4">
+			<img class='img-responsive' src="{% static book.front_cover %}">
+		</div>
+		<div class="col-sm-4">
+			<img class='img-responsive' src="{% static book.back_cover.url %}">
+		</div>	
+		<div class="col-sm-4">
+			<img class='img-responsive' src="{% static book.back_cover.url %}">
+		</div>	
+	</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'league/base.html' %}
+
+{% block stylez %}
+{% endblock %}
+
+{% block content %}
+	{% if champ_list %}
+		<div class="row">
+			{% for champ in champ_list %}
+				<div class="col-lg-2 col-md-3 col-xs-6 thumbnail center-block">
+					<a href="/league/champions/{{ champ.id }}/"><img src={{ base_url}}{{ champ.image.get }} class="img-circle">
+					<div class="text-center">{{champ.name}}</div></a>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>There are no champs</p>
+	{% endif %}
+{% endblock %}

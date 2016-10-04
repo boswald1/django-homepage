@@ -1,0 +1,9 @@
+{% extends 'mysite/base.html' %}
+
+{% block content %}
+
+	{% load static %}
+	<object data="{% static "mysite/resume.pdf" %}" type='application/pdf' width="100%" height="800" >
+	</object>
+
+{% endblock %}
