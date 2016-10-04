@@ -4,6 +4,9 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">google.load("visualization", "1", {packages:["corechart"]});
 	</script>
+	{% comment yui sucked %}
+	<script src="http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js"></script>
+	{% endcomment %}
 {% endblock %}
 
 
@@ -86,11 +89,8 @@
 		</ul>
 
 		<div class="tab-content">
-			<div class="tab-pane active" id="{{ chart.get_html_id }}" role="tabpanel">
-				{{stat_charts.0.as_html}}
-			</div>
 		{% for chart in stat_charts %}
-			<div class="tab-pane" id="{{ chart.get_html_id }}" role="tabpanel">
+			<div class="tab-pane{% if stat_charts.0 == chart %} active{% endif %}" id="{{ chart.get_html_id }}" role="tabpanel">
 				{{ chart.as_html }}
 			</div>	
 		{% endfor %}
