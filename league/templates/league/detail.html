@@ -1,12 +1,12 @@
 {% extends 'league/base.html' %}
 
 {% block stylez %}
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript">google.load("visualization", "1", {packages:["corechart"]});
-	</script>
+
 	{% comment yui sucked %}
 	<script src="http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js"></script>
 	{% endcomment %}
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+
 {% endblock %}
 
 
@@ -29,12 +29,12 @@
 		</div>
 
 		<a class="left carousel-control" href="#champ_skins_splash" role="button" data-slide="prev">
-		    <span class="icon-prev" aria-hidden="true"></span>
-		    <span class="sr-only">Previous</span>
+			<span class="icon-prev" aria-hidden="true"></span>
+			<span class="sr-only">Previous</span>
 		</a>
 		<a class="right carousel-control" href="#champ_skins_splash" role="button" data-slide="next">
-		    <span class="icon-next" aria-hidden="true"></span>
-		    <span class="sr-only">Next</span>
+			<span class="icon-next" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
 		</a>		
 	</div>
 </div>
@@ -47,61 +47,61 @@
 
 
 {% block content %}
-<div class="row">
-	<div class="col-lg-12">
-		{% autoescape off %}
-			{{ champ.lore  }}
-		{% endautoescape %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			{% autoescape off %}
+				{{ champ.lore  }}
+			{% endautoescape %}
+		</div>
 	</div>
-</div>
 
-<div class="row">
+	<div class="row">
 
-	<div class="col-lg-6">
-		<H3>Ally Tips</H3>
-		<ul>
-			{% for tip in champ.allytips %}
-				<li> {{ tip }} </li>
+		<div class="col-lg-6">
+			<H3>Ally Tips</H3>
+			<ul>
+				{% for tip in champ.allytips %}
+					<li> {{ tip }} </li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		<div class="col-lg-6">
+			<H3>Enemy Tips</H3>
+			<ul>
+				{% for tip in champ.enemytips %}
+					<li> {{ tip }} </li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<H3>Champion Statistics</H3>
+
+			<ul class="nav nav-tabs" id="statChartTab">
+			{% for chart in stat_charts %}
+				<li class="nav-item">
+					<a class="nav-link" data-toggle="tab" href="#{{ chart.get_html_id }}" role="tab" aria-controls="{{chart.get_html_id}}">{{ chart.get_html_id }}</a>
+				</li>
 			{% endfor %}
-		</ul>
-	</div>
+			</ul>
 
-	<div class="col-lg-6">
-		<H3>Enemy Tips</H3>
-		<ul>
-			{% for tip in champ.enemytips %}
-				<li> {{ tip }} </li>
+			<div class="tab-content">
+			{% for chart in stat_charts %}
+				<div class="tab-pane{% if stat_charts.0 == chart %} active{% endif %}" id="{{ chart.get_html_id }}" role="tabpanel">
+					{{ chart.as_html }}
+				</div>	
 			{% endfor %}
-		</ul>
-	</div>
-</div>
-
-<div class="row">
-	<div class="col-lg-12">
-		<H3>Champion Statistics</H3>
-
-		<ul class="nav nav-tabs" id="statChartTab">
-		{% for chart in stat_charts %}
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#{{ chart.get_html_id }}" role="tab" aria-controls="{{chart.get_html_id}}">{{ chart.get_html_id }}</a>
-			</li>
-		{% endfor %}
-		</ul>
-
-		<div class="tab-content">
-		{% for chart in stat_charts %}
-			<div class="tab-pane{% if stat_charts.0 == chart %} active{% endif %}" id="{{ chart.get_html_id }}" role="tabpanel">
-				{{ chart.as_html }}
-			</div>	
-		{% endfor %}
+			</div>
 		</div>
 	</div>
 </div>
 
-<script>
-  $(function () {
-    $('#statChartTab a:last').tab('show')
-  })
-</script>
+
+
+
 
 {% endblock %}
