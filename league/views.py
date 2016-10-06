@@ -44,7 +44,7 @@ def champion_average_statperlevel(tag, stat):
 
 
 from graphos.sources.simple import SimpleDataSource
-from graphos.renderers.gchart import LineChart
+from graphos.renderers.highcharts import LineChart
 def initialize_stat_charts(champ):
 	# Grab data for graphs
 	stat_charts = []
