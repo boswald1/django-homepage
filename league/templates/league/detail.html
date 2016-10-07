@@ -35,65 +35,81 @@
 	</div>
 </div>
 
-<div class="col-md-12">
+<div class="col-lg-12">
 	<img style="float:left; padding-right:5px;" src={{ base_url}}{{ champ.image.get }}>
 	<H1 style="padding-top:10px">{{ champ.name }}</br><small> {{ champ.title }}</small></H1>
 </div>
+
 {% endblock %}
 
 
 {% block content %}
 <div class="col-lg-12">
-	<div class="row">
-		<div class="col-lg-12">
-			{% autoescape off %}
-				{{ champ.lore  }}
-			{% endautoescape %}
+	<ul class="nav nav-tabs" id="champion-info">
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#Lore" role="tab" aria-controls="Lore">Lore</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#Tips" role="tab" aria-controls="Tips">Tips</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" data-toggle="tab" href="#Statistics" role="tab" aria-controls="Statistics">Statistics</a>
+		</li>
+	</ul>
+
+
+
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="Lore" role="tabpanel">
+				{% autoescape off %}
+					{{ champ.lore  }}
+				{% endautoescape %}
 		</div>
-	</div>
 
-	<div class="row">
+		<div class="tab-pane" id="Tips" role="tabpanel">
 
-		<div class="col-lg-6">
-			<H3>Ally Tips</H3>
-			<ul>
-				{% for tip in champ.allytips %}
-					<li> {{ tip }} </li>
-				{% endfor %}
-			</ul>
+			<div class="col-lg-6">
+				<H3>Ally Tips</H3>
+				<ul>
+					{% for tip in champ.allytips %}
+						<li> {{ tip }} </li>
+					{% endfor %}
+				</ul>
+			</div>
+
+			<div class="col-lg-6">
+				<H3>Enemy Tips</H3>
+				<ul>
+					{% for tip in champ.enemytips %}
+						<li> {{ tip }} </li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
 
-		<div class="col-lg-6">
-			<H3>Enemy Tips</H3>
-			<ul>
-				{% for tip in champ.enemytips %}
-					<li> {{ tip }} </li>
-				{% endfor %}
-			</ul>
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-lg-12">
+		<div class="tab-pane" id="Statistics" role="tabpanel">
 			<H3>Champion Statistics</H3>
 
 			<ul class="nav nav-tabs" id="statChartTab">
 			{% for chart in stat_charts %}
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#{{ chart.get_html_id }}" role="tab" aria-controls="{{chart.get_html_id}}">{{ chart.get_options.title }}</a>
+					<a class="nav-link" data-toggle="tab" href="#{{ chart.get_options.title }}" role="tab" aria-controls="{{chart.get_options.title}}">{{ chart.get_options.title }}</a>
 				</li>
 			{% endfor %}
 			</ul>
 
 			<div class="tab-content">
 			{% for chart in stat_charts %}
-				<div class="tab-pane{% if stat_charts.0 == chart %} active{% endif %}" id="{{ chart.get_html_id }}" role="tabpanel">
+				<div class="tab-pane{% if stat_charts.0 == chart %} active{% endif %}" id="{{ chart.get_options.title }}" role="tabpanel">
 					{{ chart.as_html }}
 				</div>	
 			{% endfor %}
 			</div>
 		</div>
+
 	</div>
+
 </div>
 
 {% endblock %}

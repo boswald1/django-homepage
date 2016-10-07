@@ -74,7 +74,7 @@ def initialize_stat_charts(champ):
 				row.append(champ_avg_stat + x * champ_avg_statperlevel)
 
 			champ_stat = SimpleDataSource(data=stat_data)
-			stat_chart = LineChart(champ_stat, options={'title': stat})
+			stat_chart = LineChart(champ_stat, width='100%', options={'title': stat})
 			stat_charts.append(stat_chart)
 	return stat_charts
 
