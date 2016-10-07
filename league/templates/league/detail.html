@@ -1,10 +1,6 @@
 {% extends 'league/base.html' %}
 
 {% block stylez %}
-
-	{% comment yui sucked %}
-	<script src="http://yui.yahooapis.com/3.10.0/build/yui/yui-min.js"></script>
-	{% endcomment %}
 	<script src="http://code.highcharts.com/highcharts.js"></script>
 
 {% endblock %}
@@ -47,7 +43,7 @@
 
 
 {% block content %}
-<div class="container">
+<div class="col-lg-12">
 	<div class="row">
 		<div class="col-lg-12">
 			{% autoescape off %}
@@ -84,7 +80,7 @@
 			<ul class="nav nav-tabs" id="statChartTab">
 			{% for chart in stat_charts %}
 				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#{{ chart.get_html_id }}" role="tab" aria-controls="{{chart.get_html_id}}">{{ chart.get_html_id }}</a>
+					<a class="nav-link" data-toggle="tab" href="#{{ chart.get_html_id }}" role="tab" aria-controls="{{chart.get_html_id}}">{{ chart.get_options.title }}</a>
 				</li>
 			{% endfor %}
 			</ul>
@@ -99,9 +95,5 @@
 		</div>
 	</div>
 </div>
-
-
-
-
 
 {% endblock %}

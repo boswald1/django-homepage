@@ -93,23 +93,8 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # [START db_setup]
 import os
-if os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine'):
-	# Running on production App Engine, so use a Google Cloud SQL database.
-	DATABASES = {
-		'default': {
-			'ENGINE': 'django.db.backends.mysql',
-			'HOST': '/cloudsql/named-archway-141900:us-central1:mydb2',
-			'NAME': 'blog',
-			'USER': 'root',
-			'PASSWORD': 'X8S-WST-oCy-EcB'
-		}
-	}
-	# SECURITY WARNING: don't run with debug turned on in production!
-	DEBUG = False
-
-	ALLOWED_HOSTS = ['*']
-	STATIC_URL = '/static/'
-else:
+if os.getenv('PATH', '').startswith('/home/'):
+	# Running on pythonanywhere
 	DATABASES = {
 		'default': {
 			'ENGINE': 'django.db.backends.mysql',
@@ -120,7 +105,19 @@ else:
 			'PORT': '3306',
 		}
 	}
+	# SECURITY WARNING: don't run with debug turned on in production!
+	DEBUG = False
 
+	ALLOWED_HOSTS = ['*']
+	STATIC_URL = '/static/'
+
+else:
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.sqlite3',
+			'NAME': 'mydatabase',
+		}
+	}
 	# SECURITY WARNING: don't run with debug turned on in production!
 	DEBUG = True
 	ALLOWED_HOSTS = ['*']
