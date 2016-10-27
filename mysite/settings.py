@@ -109,7 +109,7 @@ if os.getenv('PATH', '').startswith('/home/'):
 	DEBUG = False
 
 	ALLOWED_HOSTS = ['*']
-	STATIC_URL = '/static/'
+	STATIC_URL = 'http://home.bryanoswald.com:8080/'
 
 else:
 	DATABASES = {
@@ -121,7 +121,7 @@ else:
 	# SECURITY WARNING: don't run with debug turned on in production!
 	DEBUG = True
 	ALLOWED_HOSTS = []
-	STATIC_URL = '/mysite/static/'
+	STATIC_URL = 'http://home.bryanoswald.com:8080/'
 # [END db_setup]
 
 # Internationalization

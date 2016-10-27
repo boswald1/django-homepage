@@ -39,9 +39,9 @@ class Book(models.Model):
 	illustrator = models.CharField(max_length=100, blank=True)
 
 
-	front_cover = models.ImageField(upload_to='static/books/', blank=True)
-	back_cover = models.ImageField(upload_to='static/books/', blank=True)
-	publication_page = models.ImageField(upload_to='static/books/', blank=True)
+	front_cover = models.ImageField(upload_to='/static/books/', blank=True)
+	back_cover = models.ImageField(upload_to='/static/books/', blank=True)
+	publication_page = models.ImageField(upload_to='/static/books/', blank=True)
 
 	def __str__(self):
 		return self.title
