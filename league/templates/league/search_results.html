@@ -6,7 +6,7 @@
 		<a href="/league/summoner/{{ entry }}"><img src='{{entry.profileIcon_url}}'> <b>{{ entry }}</b></a>
 	{% endfor %}
 	{% for entry in found_champs %}
-		<a href="/league/champions/{{ entry.id }}"><img src='{{entry.image.get}}'> <b>{{ entry }}</b></a>
+		<a href="/league/champions/{{ entry.id }}"><img src='{{ base_url }}{{entry.image.get}}'> <b>{{ entry }}</b></a>
 	{% endfor %}
 </div>
 {% if errors %}

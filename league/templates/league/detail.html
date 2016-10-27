@@ -46,7 +46,7 @@
 {% block content %}
 <div class="col-lg-12">
 	<ul class="nav nav-tabs" id="champion-info">
-		<li class="nav-item">
+		<li class="nav-item active">
 			<a class="nav-link" data-toggle="tab" href="#Lore" role="tab" aria-controls="Lore">Lore</a>
 		</li>
 		<li class="nav-item">
@@ -89,11 +89,10 @@
 		</div>
 
 		<div class="tab-pane" id="Statistics" role="tabpanel">
-			<H3>Champion Statistics</H3>
 
 			<ul class="nav nav-tabs" id="statChartTab">
 			{% for chart in stat_charts %}
-				<li class="nav-item">
+				<li class="nav-item{% if stat_charts.0 == chart %} active{% endif %}">
 					<a class="nav-link" data-toggle="tab" href="#{{ chart.get_options.title }}" role="tab" aria-controls="{{chart.get_options.title}}">{{ chart.get_options.title }}</a>
 				</li>
 			{% endfor %}

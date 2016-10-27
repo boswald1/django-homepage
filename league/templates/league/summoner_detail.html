@@ -2,11 +2,20 @@
 
 {% block content %}
 <div class='col-lg-12'>
-	<H2>Recent Matches</H2>
-	<ul>
-	{% for match in recent_matches %}
-		<li><img style="padding-bottom: 10px;" src='{{base_url}}{{match.champion.image.get}}'> {{match.matchId}}</li>
-	{% endfor %}
+	<ul class="nav nav-tabs" id="summoner-detail">
+		<li class="nav-item active">	
+			<a class="nav-link" data-toggle="tab" href="#MatchHistory" role="tab" aria-controls="MatchHistory">Match History</a>
+		</li>
 	</ul>
+
+	<div class="tab-content">
+		<div class="tab-pane active" id="MatchHistory" role="tabpanel">
+			{% for match in recent_matches %}
+				<div class="media"><img style="padding-bottom: 10px;" src='{{base_url}}{{match.champion.image.get}}'> {{match.matchId}}</div>
+			{% endfor %}
+		</div>
+
+	</div>
+
 </div>
 {% endblock %}

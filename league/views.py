@@ -124,12 +124,14 @@ def search_results(request):
 			entry_query = search.get_query(query_string, ['name',])
 			found_summoners = Summoner.objects.filter(entry_query).order_by('-name')
 
+	base_url = "//ddragon.leagueoflegends.com/cdn/6.18.1/img/champion/"
 	page_title = "Search Results for '{}'".format(str(query_string))
 	context = { 
 				'query_string': query_string,
 				'found_summoners': found_summoners,
 				'found_champs': found_champs,
 				'page_title': page_title,
+				'base_url': base_url,
 			}
 	return render(request, 'league/search_results.html', context)
 
